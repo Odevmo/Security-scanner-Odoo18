@@ -20,7 +20,6 @@
                     <group>
                         <field name="name"/>
                         <field name="scan_date" readonly="1"/>
-                        <field name="verbose_mode"/>
                     </group>
                 </group>
 
