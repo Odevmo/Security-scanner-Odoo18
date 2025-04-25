@@ -13,6 +13,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/security_scan_views.xml',
+        'data/security_scan_sequence.xml',
     ],
     'installable': True,
     'application': True,

@@ -1,7 +1,5 @@
 from odoo import models, fields, api
-from odoo.exceptions import UserError
-import subprocess
-import socket
+from datetime import datetime
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -10,145 +8,112 @@ class SecurityScan(models.Model):
     _name = 'security.scan'
     _description = 'Security Scan'
 
-    name = fields.Char(string='Scan Name', required=True)
+    name = fields.Char(string='Scan Name', required=True, default=lambda self: self._default_name())
     scan_date = fields.Datetime(string='Scan Date', default=fields.Datetime.now)
-    master_password_set = fields.Boolean(string='Master Password Set')
-    https_enabled = fields.Boolean(string='HTTPS Enabled')
-    access_rules_defined = fields.Boolean(string='Access Rules Defined')
-    log_file_present = fields.Boolean(string='Log File Present')
-    db_filter_set = fields.Boolean(string='DB Filter Set')
-    db_listing_disabled = fields.Boolean(string='DB Listing Disabled')
+
+    master_password_set = fields.Boolean(string='Master Password Set', default=True)
+    https_enabled = fields.Boolean(string='HTTPS Enabled', default=True)
+    access_rules_defined = fields.Boolean(string='Access Rules Defined', default=True)
+    log_file_present = fields.Boolean(string='Log File Present', default=True)
+    db_filter_set = fields.Boolean(string='DB Filter Set', default=True)
+    db_listing_disabled = fields.Boolean(string='DB Listing Disabled', default=True)
+
     notes = fields.Text(string='Notes')
     progress = fields.Integer(string='Progress', default=0)
     running_scan = fields.Boolean(string='Running Scan', default=False)
+    scan_completed = fields.Boolean(string='Scan Completed', default=False)
 
+    @api.model
+    def _default_name(self):
+        return f"Scan {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
 
     def _check_master_password(self):
-        """Check if a master password is set."""
-        #  check for a master password.
-        master_password = self.env.cr.execute("SELECT count(*) FROM ir_config_parameter WHERE key='auth_master'")
-        master_password_count = self.env.cr.fetchone()[0]
-        return master_password_count > 0
+        try:
+            self.env.cr.execute("SELECT count(*) FROM ir_config_parameter WHERE key='auth_master'")
+            count = self.env.cr.fetchone()[0]
+            return count > 0, f"Found {count} master password record(s)."
+        except Exception as e:
+            _logger.error("Error checking master password: %s", e)
+            return False, str(e)
 
     def _check_https(self):
-        """Check if the Odoo instance is running over HTTPS."""
-        #  check if the Odoo instance is running over HTTPS.
         try:
-            # Get the Odoo server URL from the system parameters
             base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-            if not base_url:
-                return False  # Cannot determine, assume not secure.
-
-            #  basic check, more robust checking would require checking the actual certificate.
-            return base_url.startswith('https://')
+            return base_url and base_url.startswith('https://'), f"Base URL is '{base_url}'"
         except Exception as e:
             _logger.error("Error checking HTTPS: %s", e)
-            return False  # Error occurred, consider it not secure
+            return False, str(e)
 
     def _check_access_rules(self):
-        """Check if access rules are defined for all models."""
-        #  check if access rules are defined for all models.
         try:
-            # Get all non-abstract, non-transient models
+            missing_models = []
             models = self.env['ir.model'].search([
-                ('is_abstract', '=', False),
-                ('is_transient', '=', False),
-                ('model', 'not like', 'ir.%'),  # Exclude Odoo internal models
+                ('model', 'not like', 'ir.%'),
                 ('model', 'not like', 'res.%'),
             ])
             for model in models:
-                # Check if any access rules exist for the model
                 access_count = self.env['ir.model.access'].search_count([
                     ('model_id', '=', model.id)
                 ])
                 if access_count == 0:
-                    return False  # Found a model with no access rules
-            return True  # All models have access rules
+                    missing_models.append(model.model)
+            if missing_models:
+                return False, f"Missing access rules for: {', '.join(missing_models)}"
+            return True, "All models have access rules defined."
         except Exception as e:
             _logger.error("Error checking access rules: %s", e)
-            return False
+            return False, str(e)
 
     def _check_log_file(self):
-        """Check if a log file is present."""
-        # check if a log file is present
         try:
             log_level = self.env['ir.config_parameter'].sudo().get_param('logging_level')
-            if log_level:
-                return True
-            else:
-                return False
+            return bool(log_level), f"Log level is set to '{log_level}'" if log_level else "Log level not set."
         except Exception as e:
             _logger.error("Error checking log file: %s", e)
-            return False
+            return False, str(e)
 
     def _check_db_filter(self):
-        """Check if a database filter is set."""
-        # check if a database filter is set.
         try:
             dbfilter = self.env['ir.config_parameter'].sudo().get_param('database_filter')
-            return bool(dbfilter)
+            return bool(dbfilter), f"Database filter: '{dbfilter}'" if dbfilter else "No database filter set."
         except Exception as e:
-            _logger.error("Error checking db filter: %s", e)
-            return False
+            _logger.error("Error checking DB filter: %s", e)
+            return False, str(e)
 
     def _check_db_listing(self):
-        """Check if database listing is disabled."""
-        # check if database listing is disabled.
         try:
             db_list = self.env['ir.config_parameter'].sudo().get_param('database_list')
-            if db_list == 'False':
-                return True
-            else:
-                return False
+            return db_list == 'False', f"Database listing: {db_list}"
         except Exception as e:
-            _logger.error("Error checking db listing: %s", e)
-            return False
+            _logger.error("Error checking DB listing: %s", e)
+            return False, str(e)
 
     def run_scan(self):
-        """Run the security scan."""
         self.running_scan = True
+        self.scan_completed = False
         self.progress = 0
-        # Use a new thread to run the scan so it doesn't block the UI.
-        # Clear previous results
-        self.master_password_set = False
-        self.https_enabled = False
-        self.access_rules_defined = False
-        self.log_file_present = False
-        self.db_filter_set = False
-        self.db_listing_disabled = False
         self.notes = ""
+        verbose_notes = ""
 
-        # Perform the checks and update the record
-        self.master_password_set = self._check_master_password()
-        self.progress = 16
-        self.https_enabled = self._check_https()
-        self.progress = 33
-        self.access_rules_defined = self._check_access_rules()
-        self.progress = 50
-        self.log_file_present = self._check_log_file()
-        self.progress = 66
-        self.db_filter_set = self._check_db_filter()
-        self.progress = 83
-        self.db_listing_disabled = self._check_db_listing()
+        checks = [
+            ('master_password_set', self._check_master_password),
+            ('https_enabled', self._check_https),
+            ('access_rules_defined', self._check_access_rules),
+            ('log_file_present', self._check_log_file),
+            ('db_filter_set', self._check_db_filter),
+            ('db_listing_disabled', self._check_db_listing),
+        ]
+
+        total_checks = len(checks)
+        for idx, (field_name, check_method) in enumerate(checks):
+            result, msg = check_method()
+            setattr(self, field_name, result)
+            verbose_notes += f"{field_name.replace('_', ' ').title()}: {msg}\n"
+            self.progress = (idx + 1) * (100 // total_checks)
+
         self.progress = 100
         self.running_scan = False
+        self.scan_completed = True
+        self.notes = verbose_notes.strip()
 
-        # Prepare the notification message
-        message = "Security Scan Results:\n\n"
-        message += f"Master Password Set: {self.master_password_set}\n"
-        message += f"HTTPS Enabled: {self.https_enabled}\n"
-        message += f"Access Rules Defined: {self.access_rules_defined}\n"
-        message += f"Log File Present: {self.log_file_present}\n"
-        message += f"DB Filter Set: {self.db_filter_set}\n"
-        message += f"DB Listing Disabled: {self.db_listing_disabled}\n"
-
-        # Display the results in a popup window
-        return {
-            'type': 'ir.actions.act_window',
-            'title': 'Security Scan Results',
-            'view_mode': 'form',
-            'res_model': 'security.scan',
-            'res_id': self.id,
-            'context': {'default_notes': message},
-            'target': 'new',
-        }
+        return True
