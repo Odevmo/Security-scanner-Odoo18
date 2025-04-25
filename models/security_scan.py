@@ -58,7 +58,9 @@ class SecurityScan(models.Model):
                 if access_count == 0:
                     missing_models.append(model.model)
             if missing_models:
-                return False, f"Missing access rules for: {', '.join(missing_models)}"
+                formatted_list = "\n- " + "\n- ".join(missing_models)
+                message = f"Missing access rules for the following models:{formatted_list}"
+                return False, message
             return True, "All models have access rules defined."
         except Exception as e:
             _logger.error("Error checking access rules: %s", e)

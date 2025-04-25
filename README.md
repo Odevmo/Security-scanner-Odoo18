@@ -32,7 +32,7 @@
 
 ## Usage
 
-1. Navigate to **Security Scan → Scans**.
+1. Navigate to **Security Scanner → Scans**.
 2. Click **Create** to generate a new scan record.
 3. Hit **Run Scan**.
 4. Review the results, all displayed in a detailed, readable format under **Scan Results**.
