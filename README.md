@@ -18,10 +18,9 @@
 - One-click scan initiation from the UI.
 - Real-time scan progress with clear success/failure indicators.
 - Automatically generated scan names for easy traceability.
-- All output is verbose by default, eliminating toggles and confusion.
 
 ### 🛝 UI Integration
-- Custom form and list views.
+- Form and list views.
 - Seamless integration with Odoo’s menu system under the "Security Scan" section.
 
 ## Installation
