@@ -37,13 +37,13 @@
                                 <field name="scan_date" readonly="1"/>
                             </group>
                         </group>
-                        <group string="Security Checks"  invisible="state != 'draft'">
-                            <field name="master_password_set"/>
-                            <field name="https_enabled"/>
-                            <field name="log_file_present"/>
-                            <field name="db_filter_set"/>
-                            <field name="db_listing_disabled"/>
-                            <field name="access_rules_defined"/>
+                        <group string="Security Checks" invisible="state != 'draft'">
+                            <field name="master_password_set"  readonly="1"/>
+                            <field name="https_enabled"  readonly="1"/>
+                            <field name="log_file_present"  readonly="1"/>
+                            <field name="db_filter_set"  readonly="1"/>
+                            <field name="db_listing_disabled"  readonly="1"/>
+                            <field name="access_rules_defined"  readonly="1"/>
                         </group>
                         <notebook>
                             <page string="Scan Results">
