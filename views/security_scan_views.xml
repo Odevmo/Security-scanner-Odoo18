@@ -28,7 +28,6 @@
                         <field name="state"
                                widget="statusbar"
                                statusbar_visible="draft,done"
-                               statusbar_colors='{"draft": "gray", "done": "green"}'
                                readonly="1"/>
                     </header>
                     <sheet>

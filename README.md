@@ -1,3 +1,7 @@
+Certainly! Here's a concise and professional GitHub README for the **Odoo Security Scanner Suite**, focusing on essential features and a streamlined roadmap:
+
+---
+
 # Odoo Security Scanner Suite
 
 ## Overview
@@ -42,15 +46,8 @@
 
 ## Roadmap
 
-We’re building a future-proof security solution for Odoo. Here's the path ahead:
-
-### ♻️ Short-Term Enhancements
-- **Scheduled Scans**: Automate security checks periodically.
-- **UI/UX Improvements**: Further optimize scan state transitions and visibility.
-
-### 🛡️ Immediate Next Step
-**✨ Module Code Vulnerability Scanner ✨** (highest priority!)
-- Implement a new dedicated model that scans custom and third-party modules for vulnerabilities, including:
+### 🔧 Immediate Enhancements
+- **Module Code Vulnerability Scanner**: Implement a new dedicated model that scans custom and third-party modules for vulnerabilities, including:
   - SQL injection risks
   - XSS vulnerabilities
   - Unsafe file access practices
@@ -58,14 +55,8 @@ We’re building a future-proof security solution for Odoo. Here's the path ahea
 
 > ⚡ **This is the next major evolution**: From system configuration scanning to **actual codebase security auditing**.
 
-### 🤖 Mid-Term Goals
-- **Custom Security Check Builder**: Allow users to define and run their own security policies.
-- **Advanced Rule Audit**: Deep inspection of ACLs and model-level permissions.
-- **Enhanced Reporting**: Exportable, printable scan reports for security audits and compliance tracking.
-
-### 🦿 Long-Term Vision
+### 🤖 Future Vision
 - **LLM-Powered Insight Engine**: Use AI to interpret scan results, suggest mitigations, and provide dynamic risk analysis.
-- **Live CVE Detection**: Real-time scanning against known vulnerabilities in Odoo core and modules.
 
 ---
 
@@ -77,3 +68,4 @@ We’re building a future-proof security solution for Odoo. Here's the path ahea
 
 Contributions are welcome! Feel free to open an issue, suggest enhancements, or create a pull request to help strengthen the security of the Odoo ecosystem.
 
+---
