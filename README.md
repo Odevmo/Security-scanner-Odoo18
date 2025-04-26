@@ -1,7 +1,3 @@
-Certainly! Here's a concise and professional GitHub README for the **Odoo Security Scanner Suite**, focusing on essential features and a streamlined roadmap:
-
----
-
 # Odoo Security Scanner Suite
 
 ## Overview
