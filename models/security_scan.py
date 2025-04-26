@@ -226,7 +226,7 @@ class SecurityScan(models.Model):
         total_checks = len(checks)
 
         verbose_notes += '<div style="font-family: Arial, sans-serif; font-size: 14px;">'
-        verbose_notes += "<h3>🔎 Security Scan Results</h3>"
+        verbose_notes += "<h3>🔎 Security checks Results</h3>"
         verbose_notes += "<ul style='list-style: none; padding: 0;'>"
 
         for field_name, check_method in checks:
