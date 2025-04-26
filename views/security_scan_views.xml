@@ -8,7 +8,7 @@
                 <list string="Security Scans">
                     <field name="name"/>
                     <field name="scan_date"/>
-                    <field name="scan_completed"/>
+                    <field name="state"/>
                 </list>
             </field>
         </record>
@@ -24,12 +24,12 @@
                                 string="Run Scan"
                                 type="object"
                                 class="oe_highlight"
-                                modifiers='{
-                                    "invisible": [["running_scan", "=", true]],
-                                    "readonly": [["scan_completed", "=", true]]
-                                }'/>
-                        <field name="progress" widget="progressbar"
-                               modifiers='{"invisible": [["running_scan", "=", false]]}'/>
+                                invisible="state != 'draft'"/>
+                        <field name="state"
+                               widget="statusbar"
+                               statusbar_visible="draft,done"
+                               statusbar_colors='{"draft": "gray", "done": "green"}'
+                               readonly="1"/>
                     </header>
                     <sheet>
                         <group>
@@ -38,19 +38,19 @@
                                 <field name="scan_date" readonly="1"/>
                             </group>
                         </group>
-
-                        <group string="Security Checks">
+                        <group string="Security Checks"  invisible="state != 'draft'">
                             <field name="master_password_set"/>
                             <field name="https_enabled"/>
-                            <field name="access_rules_defined"/>
                             <field name="log_file_present"/>
                             <field name="db_filter_set"/>
                             <field name="db_listing_disabled"/>
+                            <field name="access_rules_defined"/>
                         </group>
-
-                        <group string="Verbose Notes / Output">
-                            <field name="notes" colspan="4" nolabel="1"/>
-                        </group>
+                        <notebook>
+                            <page string="Scan Results">
+                                <field name="notes" widget="html_view" readonly="1"/>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>

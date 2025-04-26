@@ -2,26 +2,28 @@
 
 ## Overview
 
-**Odoo Security Scanner Suite** is a developer-friendly and admin-focused module for Odoo that helps assess the security posture of your Odoo instance. It provides automated diagnostics on critical security configurations and summarizes the results in a clear, actionable report.
+**Odoo Security Scanner Suite** is a developer-friendly and admin-focused module for Odoo that helps assess the security posture of your Odoo instance. It provides automated diagnostics on critical security configurations and summarizes the results in a clear, actionable report, now displayed with improved readability using formatted HTML output.
 
 ## Features
 
 ### 🔐 Core Security Checks
 - **Master Password Validation**: Detects whether a master password is configured.
 - **HTTPS Enforcement**: Confirms secure HTTP (HTTPS) usage for your Odoo instance.
-- **Access Rule Verification**: Ensures all non-core models have defined access control rules with readable output.
-- **Logging Setup Check**: Validates whether logging levels are configured.
+- **Access Rule Verification**: Ensures all non-core models have defined access control rules with clear, human-readable output.
+- **Logging Setup Check**: Validates whether logging levels are properly configured.
 - **Database Filtering**: Verifies the presence of a database filter.
 - **Database Listing Control**: Checks if open database listing is disabled.
 
 ### 🛠️ Scan Management
-- One-click scan initiation from the UI.
-- Real-time scan progress with clear success/failure indicators.
-- Automatically generated scan names for easy traceability.
+- One-click scan initiation directly from the UI.
+- Real-time scan state tracking using a clean, state-driven interface.
+- Automatic scan naming for easy traceability.
+- Enhanced "Scan Results" output displayed in a clean, HTML-formatted view for better readability.
 
-### 🛝 UI Integration
-- Form and list views.
-- Seamless integration with Odoo’s menu system under the "Security Scan" section.
+### 🍽️ UI Integration
+- Integrated form and list views.
+- "Security Scan" menu in Odoo for easy access.
+- Improved visibility and presentation of scan findings.
 
 ## Installation
 
@@ -34,31 +36,36 @@
 1. Navigate to **Security Scanner → Scans**.
 2. Click **Create** to generate a new scan record.
 3. Hit **Run Scan**.
-4. Review the results, all displayed in a detailed, readable format under **Scan Results**.
+4. View the results under the **Scan Results** tab, presented with readable and formatted HTML.
 
 ---
 
 ## Roadmap
 
-We’re building a forward-thinking security layer for Odoo. Here’s where we’re heading:
+We’re building a future-proof security solution for Odoo. Here's the path ahead:
 
 ### ♻️ Short-Term Enhancements
-- **Scheduled Scans**: Automate security checks on a periodic basis.
-- **Scan State Improvements**: Better tracking of ongoing and completed scans to optimize UI visibility.
+- **Scheduled Scans**: Automate security checks periodically.
+- **UI/UX Improvements**: Further optimize scan state transitions and visibility.
 
-### 🛡️ Mid-Term Goals
-- **Custom Check Builder**: Let users define organization-specific checks.
-- **Detailed Rule Audit**: Deeper access control coverage with rule source tracking.
-- **Enhanced Reporting**: Exportable and filterable scan summaries for audits and compliance.
-
-### 🤖 Long-Term Vision
-- **LLM-Driven Insight**: Use AI to interpret results, recommend mitigations, and generate security audit summaries.
-- **CVE Detection Engine**: Cross-reference your Odoo version against a live CVE database.
-- **Module Code Scanner**: Analyze custom or third-party modules for common security risks:
-  - SQL injections
+### 🛡️ Immediate Next Step
+**✨ Module Code Vulnerability Scanner ✨** (highest priority!)
+- Implement a new dedicated model that scans custom and third-party modules for vulnerabilities, including:
+  - SQL injection risks
   - XSS vulnerabilities
-  - Unsafe file access patterns
-  - Misconfigured access groups
+  - Unsafe file access practices
+  - Misconfigured access controls
+
+> ⚡ **This is the next major evolution**: From system configuration scanning to **actual codebase security auditing**.
+
+### 🤖 Mid-Term Goals
+- **Custom Security Check Builder**: Allow users to define and run their own security policies.
+- **Advanced Rule Audit**: Deep inspection of ACLs and model-level permissions.
+- **Enhanced Reporting**: Exportable, printable scan reports for security audits and compliance tracking.
+
+### 🦿 Long-Term Vision
+- **LLM-Powered Insight Engine**: Use AI to interpret scan results, suggest mitigations, and provide dynamic risk analysis.
+- **Live CVE Detection**: Real-time scanning against known vulnerabilities in Odoo core and modules.
 
 ---
 
@@ -68,5 +75,5 @@ We’re building a forward-thinking security layer for Odoo. Here’s where we�
 
 ## Contributing
 
-We welcome your contributions! Create an issue, open a pull request, or suggest enhancements to improve security for the Odoo ecosystem.
+Contributions are welcome! Feel free to open an issue, suggest enhancements, or create a pull request to help strengthen the security of the Odoo ecosystem.
 

@@ -18,10 +18,11 @@ class SecurityScan(models.Model):
     db_filter_set = fields.Boolean(string='DB Filter Set', default=True)
     db_listing_disabled = fields.Boolean(string='DB Listing Disabled', default=True)
 
-    notes = fields.Text(string='Notes')
-    progress = fields.Integer(string='Progress', default=0)
-    running_scan = fields.Boolean(string='Running Scan', default=False)
-    scan_completed = fields.Boolean(string='Scan Completed', default=False)
+    notes = fields.Html(string="Scan Results")
+    state = fields.Selection([
+        ('draft', 'Draft'),
+        ('done', 'Done'),
+    ], string='Status', default='draft', readonly=True)
 
     @api.model
     def _default_name(self):
@@ -42,28 +43,6 @@ class SecurityScan(models.Model):
             return base_url and base_url.startswith('https://'), f"Base URL is '{base_url}'"
         except Exception as e:
             _logger.error("Error checking HTTPS: %s", e)
-            return False, str(e)
-
-    def _check_access_rules(self):
-        try:
-            missing_models = []
-            models = self.env['ir.model'].search([
-                ('model', 'not like', 'ir.%'),
-                ('model', 'not like', 'res.%'),
-            ])
-            for model in models:
-                access_count = self.env['ir.model.access'].search_count([
-                    ('model_id', '=', model.id)
-                ])
-                if access_count == 0:
-                    missing_models.append(model.model)
-            if missing_models:
-                formatted_list = "\n- " + "\n- ".join(missing_models)
-                message = f"Missing access rules for the following models:{formatted_list}"
-                return False, message
-            return True, "All models have access rules defined."
-        except Exception as e:
-            _logger.error("Error checking access rules: %s", e)
             return False, str(e)
 
     def _check_log_file(self):
@@ -90,32 +69,54 @@ class SecurityScan(models.Model):
             _logger.error("Error checking DB listing: %s", e)
             return False, str(e)
 
+    def _check_access_rules(self):
+        try:
+            missing_models = []
+            models = self.env['ir.model'].search([
+                ('model', 'not like', 'ir.%'),
+                ('model', 'not like', 'res.%'),
+            ])
+            for model in models:
+                access_count = self.env['ir.model.access'].search_count([
+                    ('model_id', '=', model.id)
+                ])
+                if access_count == 0:
+                    missing_models.append(model.model)
+            if missing_models:
+                formatted_list = "".join(f"<li>{model}</li>" for model in missing_models)
+                message = f"Missing access rules for the following models:<ul>{formatted_list}</ul>"
+                return False, message
+            return True, "All models have access rules defined."
+        except Exception as e:
+            _logger.error("Error checking access rules: %s", e)
+            return False, str(e)
+
     def run_scan(self):
-        self.running_scan = True
-        self.scan_completed = False
-        self.progress = 0
+        """Run the security scan."""
+        self.ensure_one()
         self.notes = ""
         verbose_notes = ""
 
         checks = [
             ('master_password_set', self._check_master_password),
             ('https_enabled', self._check_https),
-            ('access_rules_defined', self._check_access_rules),
             ('log_file_present', self._check_log_file),
             ('db_filter_set', self._check_db_filter),
             ('db_listing_disabled', self._check_db_listing),
+            ('access_rules_defined', self._check_access_rules),
         ]
 
-        total_checks = len(checks)
+        verbose_notes += "<ul>"  # Start a list
         for idx, (field_name, check_method) in enumerate(checks):
             result, msg = check_method()
             setattr(self, field_name, result)
-            verbose_notes += f"{field_name.replace('_', ' ').title()}: {msg}\n"
-            self.progress = (idx + 1) * (100 // total_checks)
+            verbose_notes += f"<li><b>{field_name.replace('_', ' ').title()}</b>: {msg}</li>"
+        verbose_notes += "</ul>"
 
-        self.progress = 100
-        self.running_scan = False
-        self.scan_completed = True
-        self.notes = verbose_notes.strip()
+        self.notes = verbose_notes
+        self.state = 'done'
 
-        return True
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
