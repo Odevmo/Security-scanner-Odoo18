@@ -1,7 +1,13 @@
+# Copyright (C) 2025 Odevma
+# Author: Odevmo https://github.com/Odevmo
+# License: LGPL-3.0 (https://www.gnu.org/licenses/lgpl-3.0.en.html)
+#
+# This module is part of the Odoo Security Scanner Suite
+# and is licensed under the terms of the GNU Lesser General Public License (LGPL v3).
+# You may redistribute and/or modify it under the terms of the LGPL-3.0.
 from odoo import models, fields, api
 from datetime import datetime
 import logging
-import os
 
 _logger = logging.getLogger(__name__)
 

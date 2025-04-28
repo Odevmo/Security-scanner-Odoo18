@@ -42,17 +42,9 @@
 
 ## Roadmap
 
-### 🔧 Immediate Enhancements
-- **Module Code Vulnerability Scanner**: Implement a new dedicated model that scans custom and third-party modules for vulnerabilities, including:
-  - SQL injection risks
-  - XSS vulnerabilities
-  - Unsafe file access practices
-  - Misconfigured access controls
+- **Scheduled scans for continuous monitoring.**
+- **Enhanced scan types (database, server environment).**
 
-> ⚡ **This is the next major evolution**: From system configuration scanning to **actual codebase security auditing**.
-
-### 🤖 Future Vision
-- **LLM-Powered Insight Engine**: Use AI to interpret scan results, suggest mitigations, and provide dynamic risk analysis.
 
 ---
 
