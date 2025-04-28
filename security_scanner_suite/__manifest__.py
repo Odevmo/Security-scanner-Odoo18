@@ -14,6 +14,9 @@
         'views/security_scan_views.xml',
         'data/security_scan_sequence.xml',
     ],
+    'images': [
+        'static/description/thumbnail.png'
+    ],
     "description": """
             Security Scanner Suite for Odoo
             ================================
