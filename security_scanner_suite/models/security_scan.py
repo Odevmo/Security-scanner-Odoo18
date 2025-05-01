@@ -37,8 +37,7 @@ class SecurityScan(models.Model):
 
     def _check_master_password(self):
         try:
-            self.env.cr.execute("SELECT count(*) FROM ir_config_parameter WHERE key='auth_master'")
-            count = self.env.cr.fetchone()[0]
+            count = self.env['ir.config_parameter'].search_count([('key', '=', 'auth_master')])
             return count > 0, f"Found {count} master password record(s)."
         except Exception as e:
             _logger.error("Error checking master password: %s", e)
