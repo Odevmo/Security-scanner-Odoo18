@@ -2,62 +2,203 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Odevmo – Odoo Security Scanner Suite (Free)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Odevmo - Odoo Security Scanner Suite</title>
+    <!-- Bootstrap 4 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="p-3">
+<body class="p-4">
 
-    <h1>Odoo Security Scanner Suite</h1>
+<!-- Header -->
+<div class="text-center mb-4">
+    <img src="logo.png" alt="Odevmo Logo" class="img-fluid mb-3 rounded shadow-sm" style="max-height:80px;">
+    <h1>🛡️ Odoo Security Scanner Suite</h1>
+    <h4 class="text-muted">Essential Free Toolkit for Securing Your Odoo Environment</h4>
+    <p class="lead">Perform critical configuration checks and system audits directly from the backend — no coding or CLI
+        required.</p>
+</div>
 
-    <p><strong>Developer:</strong> Odevmo - Odoo Security Specialist</p>
-
-    <p><em>Secure your Odoo instance with confidence.</em> The <strong>Security Scanner Suite</strong> is an essential tool for Odoo administrators and developers who care about maintaining strong, reliable security configurations. Developed by <strong>Odevmo</strong>, a trusted name in Odoo security development, this suite offers automated scanning, clear reporting, and peace of mind — all from within your Odoo environment.</p>
-
-    <h2>🔒 Core Features</h2>
-    <ul>
-        <li><strong>Master Password Validation</strong> – Ensure your database is protected at the system level.</li>
-        <li><strong>HTTPS Enforcement</strong> – Verify the secure setup of your instance’s external access.</li>
-        <li><strong>Access Rule Verification</strong> – Quickly detect missing access control rules.</li>
-        <li><strong>Logging Configuration Check</strong> – Validate logging level settings for audit readiness.</li>
-        <li><strong>Database Filtering</strong> – Enhance security in multi-database environments.</li>
-        <li><strong>Database Listing Control</strong> – Prevent unauthorized database visibility.</li>
-    </ul>
-
-    <h2>🚀 Easy to Use</h2>
-    <ul>
-        <li>Simple UI – One-click scan execution from your Odoo backend.</li>
-        <li>Formatted Results – Clean, modern HTML scan results with clear pass/fail icons.</li>
-        <li>Instant Security Score – Understand your overall security posture at a glance.</li>
-    </ul>
-
-    <h2>🖼️ Main Screenshot</h2>
-    <img src="main_screenshot.png" alt="Security Scanner Results Screen" class="img-fluid rounded shadow mb-4">
-
-    <h2>📷 Demo Screenshots</h2>
-    <div class="d-flex flex-wrap">
-        <img src="demo_screenshot_1.png" alt="Demo Screenshot 1" class="img-fluid rounded shadow m-2" style="max-width:300px;">
-        <img src="demo_screenshot_2.png" alt="Demo Screenshot 2" class="img-fluid rounded shadow m-2" style="max-width:300px;">
-        <img src="demo_screenshot_3.png" alt="Demo Screenshot 3" class="img-fluid rounded shadow m-2" style="max-width:300px;">
+<!-- Overview -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">📘 Overview</h2>
+        <p>
+            The <strong>Odoo Security Scanner Suite</strong> is a free, lightweight module developed by
+            <strong>Odevmo</strong> to help you validate security-related settings in your Odoo environment.
+            From access control to HTTPS to logging, this tool provides essential checks with zero configuration needed.
+        </p>
+        <ul>
+            <li>✔️ Fast, read-only scans of your configuration</li>
+            <li>✔️ One-click UI interface for quick assessments</li>
+            <li>✔️ No external dependencies</li>
+        </ul>
     </div>
+</section>
 
-    <h2>💡 Why Choose Odevmo?</h2>
-    <p><strong>Odevmo</strong> specializes exclusively in Odoo security, combining deep technical expertise with a passion for protecting mission-critical Odoo systems. Our goal is to deliver practical, high-impact tools that help you stay secure without unnecessary complexity.</p>
+<!-- Features -->
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title">🔍 Core Checks</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li><strong>Master Password Validation</strong></li>
+                    <li><strong>HTTPS Enforcement</strong></li>
+                    <li><strong>Access Rule Verification</strong></li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li><strong>Logging Configuration Check</strong></li>
+                    <li><strong>Database Filtering Status</strong></li>
+                    <li><strong>Database Listing Visibility</strong></li>
+                </ul>
+            </div>
+        </div>
+        <p class="text-muted mt-3 text-center">Results are displayed with pass/fail icons and helpful summaries.</p>
+    </div>
+</section>
 
-    <h2>📦 Installation</h2>
-    <ul>
-        <li>Copy the <code>security_scanner_suite</code> folder into your Odoo addons path.</li>
-        <li>Restart the Odoo server.</li>
-        <li>Install the app via the Apps menu.</li>
-    </ul>
+<!-- Screenshots -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">🖼️ Screenshots</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <img src="main_screenshot.png" class="img-fluid rounded shadow-sm" alt="Scan Result UI">
+                <p class="text-center mt-2">Main scanner results view with verdicts</p>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="d-flex flex-wrap justify-content-center">
+                    <img src="demo_screenshot_1.png" class="img-fluid rounded shadow m-2" style="max-width:240px;"
+                         alt="Demo 1">
+                    <img src="demo_screenshot_2.png" class="img-fluid rounded shadow m-2" style="max-width:240px;"
+                         alt="Demo 2">
+                    <img src="demo_screenshot_3.png" class="img-fluid rounded shadow m-2" style="max-width:240px;"
+                         alt="Demo 3">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <h2>📈 Roadmap</h2>
-    <ul>
-        <li>Scheduled scans for continuous monitoring.</li>
-        <li>Enhanced scan types (database, server environment).</li>
-    </ul>
+<!-- Ease of Use -->
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title">🚀 Simple to Use</h2>
+        <ul>
+            <li>No configuration required — install and click "Scan"</li>
+            <li>Inline summaries explain each finding</li>
+            <li>Secure-by-default: read-only, no writes or mutations</li>
+        </ul>
+    </div>
+</section>
 
-    <h2>⚖️ License</h2>
-    <p>Licensed under the <a href="https://www.gnu.org/licenses/lgpl-3.0.en.html" target="_blank">LGPL-3.0</a> license.</p>
+<!-- Installation -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">📦 Installation</h2>
+        <ul>
+            <li>Extract the <code>security_scanner_suite</code> folder to your Odoo <code>addons/</code> path</li>
+            <li>Restart the Odoo server</li>
+            <li>Install it from the Odoo Apps menu</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Roadmap -->
+<section class="section bg-light">
+    <div class="container">
+        <h2 class="section-title">📈 Roadmap</h2>
+        <ul>
+            <li>Scheduled scans with daily/weekly intervals</li>
+            <li>Email notifications for critical config gaps</li>
+            <li>More system-level diagnostics (e.g. file permissions, dependencies)</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Odevmo Security Suite Promo -->
+<section class="border p-4 mt-5 bg-white rounded shadow-sm">
+    <h4 class="mb-4">🔐 More Security Modules by <strong>Odevmo</strong></h4>
+    <div class="row">
+
+        <!-- API Security Scanner -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center shadow-sm">
+                <div class="mt-3">
+                    <img src="api_scanner_logo.png" alt="API Scanner Logo" width="96" height="96" class="rounded mb-2">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-2">API Security Scanner (v18)</h5>
+                    <p class="card-text small">Detect insecure Odoo API routes, hardcoded secrets, and evals using
+                        static code scanning.</p>
+                    <a href="https://apps.odoo.com/apps/modules/18.0/api_security_scanner/" target="_blank"
+                       class="btn btn-sm btn-primary">View on Odoo Apps</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Audit AI -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center shadow-sm">
+                <div class="mt-3">
+                    <img src="audit_ai_logo.png" alt="Audit AI Logo" width="96" height="96" class="rounded mb-2">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Security Audit AI (v16–v18)</h5>
+                    <p class="card-text small">AI-powered static analyzer with exportable reports and customizable
+                        rules.</p>
+                    <a href="https://apps.odoo.com/apps/modules/18.0/security_audit_ai/" target="_blank"
+                       class="btn btn-sm btn-primary">View on Odoo Apps</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Scanner Suite -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center shadow-sm">
+                <div class="mt-3">
+                    <img src="scanner_suite_logo.png" alt="Scanner Suite Logo" width="96" height="96"
+                         class="rounded mb-2">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title mb-2">Security Scanner Suite (Free)</h5>
+                    <p class="card-text small">Run config-level checks: master password, HTTPS, logging, ACLs and
+                        more.</p>
+                    <a href="https://apps.odoo.com/apps/modules/18.0/security_scanner_suite/" target="_blank"
+                       class="btn btn-sm btn-primary">View on Odoo Apps</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
+<!-- License -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">⚖️ License</h2>
+        <p>This module is open source and distributed under the <strong>LGPL-3.0</strong> license.</p>
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="section bg-light p-4 rounded shadow-sm">
+    <div class="container">
+        <h2>📬 Contact</h2>
+        <p>Questions? Feature requests? Need help?</p>
+        <ul class="list-unstyled">
+            <li><strong>📧 Email:</strong> <a href="mailto:odevmo.contact@gmail.com">odevmo.contact@gmail.com</a></li>
+            <li><strong>💼 LinkedIn:</strong> <a href="https://www.linkedin.com/company/odevmo" target="_blank">Odevmo on
+                LinkedIn</a></li>
+            <li><strong>📝 Contact Form:</strong> <a href="https://forms.gle/jK8STLxwAtfKVdbs9" target="_blank">Submit
+                via Google Form</a></li>
+        </ul>
+        <p class="text-muted small">We respond within 1–2 business days.</p>
+    </div>
+</section>
 
 </body>
 </html>
